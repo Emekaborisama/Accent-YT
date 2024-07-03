@@ -11,8 +11,10 @@ import random
 import asyncio
 import os
 
-XI_API_KEY = "sk_fd926060271c9482079910504ee3a8f47e6a2a5971b50070"
-VOICE_ID = "21m00Tcm4TlvDq8ikWAM"
+
+XI_API_KEY = os.environ["XI_API_KEY"]
+VOICE_ID = os.environ["VOICE_ID"]
+
 converter = SpeechToSpeechConverter(XI_API_KEY, VOICE_ID)
 
 
