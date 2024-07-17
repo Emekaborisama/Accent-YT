@@ -3,23 +3,24 @@ from download_video import get_video
 from change_audio import SpeechToSpeechConverter
 from extract_audio import get_audio
 from log_handler import logging
-from fastapi import FastAPI, HTTPException, Form, status
+from fastapi import FastAPI, HTTPException, Form, status, Request
 from typing import Annotated
 from pydantic import BaseModel
 from utils import is_valid_youtube_url, get_video_name, move_file_to_folder
 import random
 import asyncio
 import os
+from fastapi.templating import Jinja2Templates
+from get_video import fetch_voice_data
 
 
 XI_API_KEY = os.environ["XI_API_KEY"]
 VOICE_ID = os.environ["VOICE_ID"]
-
 converter = SpeechToSpeechConverter(XI_API_KEY, VOICE_ID)
 
 
 app = FastAPI()
-
+templates = Jinja2Templates(directory='templates', )
 
 @app.post("/home", summary="Home", description="A welcome message endpoint.")
 async def home():
@@ -27,7 +28,6 @@ async def home():
     A simple welcome message.
     """
     return "Welcome"
-
 
 
 @app.post("/change_audio", summary="Change yt video audio")
